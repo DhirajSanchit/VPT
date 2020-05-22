@@ -1,3 +1,4 @@
+#include <Arduino.h>
 
 #define NOTE_B0 31
 #define NOTE_C1 33
@@ -96,20 +97,22 @@
 #define CHOICE_BLUE (1 << 2)
 #define CHOICE_YELLOW   (1 << 3)
 
-#define LED_RED     10
-#define LED_GREEN   3
+#define LED_GREEN   7
+#define LED_YELLOW  9
+#define LED_RED     11
 #define LED_BLUE    13
-#define LED_YELLOW  5
+
 
 // Button pin definitions
-#define BUTTON_RED    9
-#define BUTTON_GREEN  2
+#define BUTTON_GREEN  6
+#define BUTTON_YELLOW 8
+#define BUTTON_RED    10
 #define BUTTON_BLUE   12
-#define BUTTON_YELLOW 6
+
 
 // Buzzer pin definitions
-#define BUZZER1  4
-#define BUZZER2  7
+#define BUZZER1  2
+#define BUZZER2  3
 
 // Define game parameters
 #define ROUNDS_TO_WIN      13 //Number of rounds to succesfully remember before you win. 13 is do-able.

@@ -119,7 +119,6 @@
 #define ENTRY_TIME_LIMIT   3000 //Amount of time to press a button before game times out. 3000ms = 3 sec
 
 #define MODE_MEMORY  0
-#define MODE_BATTLE  1
 #define MODE_BEEGEES 2
 
 // Game state variables
@@ -154,7 +153,6 @@ void setup()
   // Check to see if upper right button is pressed
   if (checkButton() == CHOICE_GREEN)
   {
-    gameMode = MODE_BATTLE; //Put game into battle mode
 
     //Turn on the upper right (green) LED
     setLEDs(CHOICE_GREEN);
@@ -189,12 +187,7 @@ void loop()
       play_loser(); // Player lost, play loser tones
   }
 
-  if (gameMode == MODE_BATTLE)
-  {
-    play_battle(); // Play game until someone loses
-
-    play_loser(); // Player lost, play loser tones
-  }
+  
 }
 
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=

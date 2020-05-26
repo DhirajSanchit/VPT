@@ -92,10 +92,10 @@
 
 #define CHOICE_OFF      0 //Used to control LEDs
 #define CHOICE_NONE     0 //Used to check buttons
-#define CHOICE_RED  (1 << 0)
-#define CHOICE_GREEN    (1 << 1)
-#define CHOICE_BLUE (1 << 2)
-#define CHOICE_YELLOW   (1 << 3)
+#define CHOICE_BLUE (1 << 0)
+#define CHOICE_RED  (1 << 1)
+#define CHOICE_YELLOW (1 << 2)
+#define CHOICE_GREEN  (1 << 3)
 
 #define LED_GREEN   7
 #define LED_YELLOW  9
@@ -148,7 +148,6 @@ void setup()
   gameMode = MODE_MEMORY; // By default, we're going to play the memory game
 
   // Check to see if the lower right button is pressed
-  if (checkButton() == CHOICE_YELLOW) play_beegees();
 
   // Check to see if upper right button is pressed
   if (checkButton() == CHOICE_GREEN)
@@ -261,7 +260,7 @@ void playMoves(void)
 
     // Wait some amount of time between button playback
     // Shorten this to make game harder
-    delay(150); // 150 works well. 75 gets fast.
+    delay(75); // 150 works well. 75 gets fast.
   }
 }
 
@@ -355,17 +354,17 @@ void toner(byte which, int buzz_length_ms)
   //Play the sound associated with the given LED
   switch(which) 
   {
-  case CHOICE_RED:
+  case CHOICE_BLUE:
     buzz_sound(buzz_length_ms, 1136); 
     break;
-  case CHOICE_GREEN:
-    buzz_sound(buzz_length_ms, 568); 
-    break;
-  case CHOICE_BLUE:
+  case CHOICE_RED:
     buzz_sound(buzz_length_ms, 851); 
     break;
   case CHOICE_YELLOW:
     buzz_sound(buzz_length_ms, 638); 
+    break;
+  case CHOICE_GREEN:
+    buzz_sound(buzz_length_ms, 568); 
     break;
   }
 
@@ -448,19 +447,19 @@ void attractMode(void)
 {
   while(1) 
   {
-    setLEDs(CHOICE_RED);
-    delay(100);
-    if (checkButton() != CHOICE_NONE) return;
-
     setLEDs(CHOICE_BLUE);
     delay(100);
     if (checkButton() != CHOICE_NONE) return;
 
-    setLEDs(CHOICE_GREEN);
+    setLEDs(CHOICE_RED);
     delay(100);
     if (checkButton() != CHOICE_NONE) return;
 
     setLEDs(CHOICE_YELLOW);
+    delay(100);
+    if (checkButton() != CHOICE_NONE) return;
+
+    setLEDs(CHOICE_GREEN);
     delay(100);
     if (checkButton() != CHOICE_NONE) return;
   }
@@ -477,39 +476,7 @@ int melody[] = {
 int noteDuration = 115; // This essentially sets the tempo, 115 is just about right for a disco groove :)
 int LEDnumber = 0; // Keeps track of which LED we are on during the beegees loop
 
-// Do nothing but play bad beegees music
-// This function is activated when user holds bottom right button during power up
-void play_beegees()
-{
-  //Turn on the bottom right (yellow) LED
-  setLEDs(CHOICE_YELLOW);
-  toner(CHOICE_YELLOW, 150);
 
-  setLEDs(CHOICE_RED | CHOICE_GREEN | CHOICE_BLUE); // Turn on the other LEDs until you release button
-
-  while(checkButton() != CHOICE_NONE) ; // Wait for user to stop pressing button
-
-  setLEDs(CHOICE_NONE); // Turn off LEDs
-
-  delay(1000); // Wait a second before playing song
-
-  digitalWrite(BUZZER1, LOW); // setup the "BUZZER1" side of the buzzer to stay low, while we play the tone on the other pin.
-
-  while(checkButton() == CHOICE_NONE) //Play song until you press a button
-  {
-    // iterate over the notes of the melody:
-    for (int thisNote = 0; thisNote < 32; thisNote++) {
-      changeLED();
-      tone(BUZZER2, melody[thisNote],noteDuration);
-      // to distinguish the notes, set a minimum time between them.
-      // the note's duration + 30% seems to work well:
-      int pauseBetweenNotes = noteDuration * 1.30;
-      delay(pauseBetweenNotes);
-      // stop the tone playing:
-      noTone(BUZZER2);
-    }
-  }
-}
 
 // Each time this function is called the board moves to the next LED
 void changeLED(void)

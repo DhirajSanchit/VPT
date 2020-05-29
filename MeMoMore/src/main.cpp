@@ -222,34 +222,6 @@ boolean play_memory(void)
   return true; // Player made it through all the rounds to win!
 }
 
-// Play the special 2 player battle mode
-// A player begins by pressing a button then handing it to the other player
-// That player repeats the button and adds one, then passes back.
-// This function returns when someone loses
-boolean play_battle(void)
-{
-  gameRound = 0; // Reset the game frame back to one frame
-
-  while (1) // Loop until someone fails 
-  {
-    byte newButton = wait_for_button(); // Wait for user to input next move
-    gameBoard[gameRound++] = newButton; // Add this new button to the game array
-
-    // Then require the player to repeat the sequence.
-    for (byte currentMove = 0 ; currentMove < gameRound ; currentMove++)
-    {
-      byte choice = wait_for_button();
-
-      if (choice == 0) return false; // If wait timed out, player loses.
-
-      if (choice != gameBoard[currentMove]) return false; // If the choice is incorect, player loses.
-    }
-
-    delay(100); // Give the user an extra 100ms to hand the game to the other player
-  }
-
-  return true; // We should never get here
-}
 
 // Plays the current contents of the game moves
 void playMoves(void)

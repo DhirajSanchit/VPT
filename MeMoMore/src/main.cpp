@@ -1,5 +1,13 @@
 #include <Arduino.h>
 
+// Bibliotheek voor communicatie met I2C / TWI apparaten
+#include <Wire.h> 
+
+// Bibliotheek voor het LCD scherm
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x3F, 16, 2);
+
 #define NOTE_B0 31
 #define NOTE_C1 33
 #define NOTE_CS1 35
@@ -90,6 +98,7 @@
 #define NOTE_D8 4699
 #define NOTE_DS8 4978
 
+
 #define CHOICE_OFF      0 //Used to control LEDs
 #define CHOICE_NONE     0 //Used to check buttons
 #define CHOICE_BLUE (1 << 0)
@@ -144,6 +153,10 @@ void setup()
   pinMode(BUZZER1, OUTPUT);
   pinMode(BUZZER2, OUTPUT);
 
+
+  lcd.init();                   // initialiseer het LCD scherm
+  lcd.backlight();              // zet de backlight aan
+  
   //Mode checking
   gameMode = MODE_MEMORY; // By default, we're going to play the memory game
 
@@ -169,6 +182,14 @@ void setup()
 
 void loop()
 {
+  lcd.clear();                 // wis het scherm
+
+  screen1();                   // voer functie screen1 uit
+  delay(1000);                 // pauzeer 1 seconde
+
+  screen2();                   // voer functie screen2 uit
+  delay(1000);                 // pauzeer 1 seconde
+
   attractMode(); // Blink lights while waiting for user to press a button
 
   // Indicate the start of game play
@@ -188,6 +209,33 @@ void loop()
 
   
 }
+
+void screen1() {
+  lcd.setCursor(0, 0);         // zet de cursor op positie 1, regel 1
+  lcd.print("Welkom!");           // schrijf op scherm
+
+}
+
+void screen2() {               
+  lcd.setCursor(0, 0);                        // zet de cursor op positie 1, regel 1
+  lcd.print("Druk op rood");                   // schrijf op scherm
+  lcd.setCursor(0, 1);                        // zet de cursor op positie 1, regel 2
+  lcd.print("om te beginnen.");                   // schrijf op scherm
+}
+
+void screen3() {
+  lcd.setCursor(0, 0);         // zet de cursor op positie 1, regel 1
+  lcd.print("Helaas!");           // schrijf op scherm
+
+}
+
+void screen4() {               
+  lcd.setCursor(0, 0);                        // zet de cursor op positie 1, regel 1
+  lcd.print("Behaalde rondes:");                   // schrijf op scherm
+  lcd.setCursor(7, 1);                        // zet de cursor op positie 1, regel 2
+  lcd.print(gameRound - 1);                   // schrijf op scherm
+}
+
 
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 //The following functions are related to game play only
@@ -211,9 +259,12 @@ boolean play_memory(void)
     {
       byte choice = wait_for_button(); // See what button the user presses
 
-      if (choice == 0) return false; // If wait timed out, player loses
+      if (choice == 0){
+        return false; // If wait timed out, player loses
+      }
 
       if (choice != gameBoard[currentMove]) return false; // If the choice is incorect, player loses
+     
     }
 
     delay(1000); // Player was correct, delay before playing moves
@@ -232,7 +283,8 @@ void playMoves(void)
 
     // Wait some amount of time between button playback
     // Shorten this to make game harder
-    delay(75); // 150 works well. 75 gets fast.
+    delay(150); // 150 works well. 75 gets fast.
+    
   }
 }
 
@@ -248,6 +300,12 @@ void add_to_moves(void)
   else if(newButton == 3) newButton = CHOICE_YELLOW;
 
   gameBoard[gameRound++] = newButton; // Add this new button to the game array
+
+        lcd.clear();                        // wis het scherm
+        lcd.setCursor(0, 0);                // zet de cursor op positie 1, regel 1
+        lcd.print("Huidige ronde: ");     // schrijf op scherm
+        lcd.setCursor(7, 1);                // zet de cursor op positie 1, regel 2
+        lcd.print(gameRound);               // schrijf op scherm
 }
 
 //The following functions control the hardware
@@ -327,16 +385,16 @@ void toner(byte which, int buzz_length_ms)
   switch(which) 
   {
   case CHOICE_BLUE:
-    buzz_sound(buzz_length_ms, 1136); 
+    buzz_sound(buzz_length_ms,  851); 
     break;
   case CHOICE_RED:
-    buzz_sound(buzz_length_ms, 851); 
+    buzz_sound(buzz_length_ms, 1136); 
     break;
   case CHOICE_YELLOW:
-    buzz_sound(buzz_length_ms, 638); 
+    buzz_sound(buzz_length_ms,  638); 
     break;
   case CHOICE_GREEN:
-    buzz_sound(buzz_length_ms, 568); 
+    buzz_sound(buzz_length_ms,  568); 
     break;
   }
 
@@ -401,6 +459,7 @@ void winner_sound(void)
 // Play the loser sound/lights
 void play_loser(void)
 {
+        
   setLEDs(CHOICE_RED | CHOICE_GREEN);
   buzz_sound(255, 1500);
 
@@ -412,7 +471,17 @@ void play_loser(void)
 
   setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
   buzz_sound(255, 1500);
+
+
+  lcd.clear();                 // wis het scherm
+
+  screen3();                   // voer functie screen1 uit
+  delay(1000);                 // pauzeer 1 seconde
+
+  screen4();                   // voer functie screen2 uit
+  delay(2000);                 // pauzeer 1 seconde
 }
+
 
 // Show an "attract mode" display while waiting for user to press button.
 void attractMode(void)
@@ -434,27 +503,8 @@ void attractMode(void)
     setLEDs(CHOICE_GREEN);
     delay(100);
     if (checkButton() != CHOICE_NONE) return;
+
+
+
   }
-}
-
-
-// Notes in the melody. Each note is about an 1/8th note, "0"s are rests.
-int melody[] = {
-  NOTE_G4, NOTE_A4, 0, NOTE_C5, 0, 0, NOTE_G4, 0, 0, 0,
-  NOTE_E4, 0, NOTE_D4, NOTE_E4, NOTE_G4, 0,
-  NOTE_D4, NOTE_E4, 0, NOTE_G4, 0, 0,
-  NOTE_D4, 0, NOTE_E4, 0, NOTE_G4, 0, NOTE_A4, 0, NOTE_C5, 0};
-
-int noteDuration = 115; // This essentially sets the tempo, 115 is just about right for a disco groove :)
-int LEDnumber = 0; // Keeps track of which LED we are on during the beegees loop
-
-
-
-// Each time this function is called the board moves to the next LED
-void changeLED(void)
-{
-  setLEDs(1 << LEDnumber); // Change the LED
-
-  LEDnumber++; // Goto the next LED
-  if(LEDnumber > 3) LEDnumber = 0; // Wrap the counter if needed
 }

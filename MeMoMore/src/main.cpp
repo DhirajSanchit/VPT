@@ -475,10 +475,10 @@ void play_loser(void)
 
   lcd.clear();                 // wis het scherm
 
-  screen3();                   // voer functie screen1 uit
+  screen3();                   // voer functie screen3 uit
   delay(1000);                 // pauzeer 1 seconde
 
-  screen4();                   // voer functie screen2 uit
+  screen4();                   // voer functie screen4 uit
   delay(2000);                 // pauzeer 1 seconde
 }
 

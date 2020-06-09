@@ -1,4 +1,3 @@
-#include <Arduino.h>
 
 // Bibliotheek voor communicatie met I2C / TWI apparaten
 #include <Wire.h> 
@@ -7,97 +6,6 @@
 #include <LiquidCrystal_I2C.h>
 
 LiquidCrystal_I2C lcd(0x3F, 16, 2);
-
-#define NOTE_B0 31
-#define NOTE_C1 33
-#define NOTE_CS1 35
-#define NOTE_D1 37
-#define NOTE_DS1 39
-#define NOTE_E1 41
-#define NOTE_F1 44
-#define NOTE_FS1 46
-#define NOTE_G1 49
-#define NOTE_GS1 52
-#define NOTE_A1 55
-#define NOTE_AS1 58
-#define NOTE_B1 62
-#define NOTE_C2 65
-#define NOTE_CS2 69
-#define NOTE_D2 73
-#define NOTE_DS2 78
-#define NOTE_E2 82
-#define NOTE_F2 87
-#define NOTE_FS2 93
-#define NOTE_G2 98
-#define NOTE_GS2 104
-#define NOTE_A2 110
-#define NOTE_AS2 117
-#define NOTE_B2 123
-#define NOTE_C3 131
-#define NOTE_CS3 139
-#define NOTE_D3 147
-#define NOTE_DS3 156
-#define NOTE_E3 165
-#define NOTE_F3 175
-#define NOTE_FS3 185
-#define NOTE_G3 196
-#define NOTE_GS3 208
-#define NOTE_A3 220
-#define NOTE_AS3 233
-#define NOTE_B3 247
-#define NOTE_C4 262
-#define NOTE_CS4 277
-#define NOTE_D4 294
-#define NOTE_DS4 311
-#define NOTE_E4 330
-#define NOTE_F4 349
-#define NOTE_FS4 370
-#define NOTE_G4 392
-#define NOTE_GS4 415
-#define NOTE_A4 440
-#define NOTE_AS4 466
-#define NOTE_B4 494
-#define NOTE_C5 523
-#define NOTE_CS5 554
-#define NOTE_D5 587
-#define NOTE_DS5 622
-#define NOTE_E5 659
-#define NOTE_F5 698
-#define NOTE_FS5 740
-#define NOTE_G5 784
-#define NOTE_GS5 831
-#define NOTE_A5 880
-#define NOTE_AS5 932
-#define NOTE_B5 988
-#define NOTE_C6 1047
-#define NOTE_CS6 1109
-#define NOTE_D6 1175
-#define NOTE_DS6 1245
-#define NOTE_E6 1319
-#define NOTE_F6 1397
-#define NOTE_FS6 1480
-#define NOTE_G6 1568
-#define NOTE_GS6 1661
-#define NOTE_A6 1760
-#define NOTE_AS6 1865
-#define NOTE_B6 1976
-#define NOTE_C7 2093
-#define NOTE_CS7 2217
-#define NOTE_D7 2349
-#define NOTE_DS7 2489
-#define NOTE_E7 2637
-#define NOTE_F7 2794
-#define NOTE_FS7 2960
-#define NOTE_G7 3136
-#define NOTE_GS7 3322
-#define NOTE_A7 3520
-#define NOTE_AS7 3729
-#define NOTE_B7 3951
-#define NOTE_C8 4186
-#define NOTE_CS8 4435
-#define NOTE_D8 4699
-#define NOTE_DS8 4978
-
 
 #define CHOICE_OFF      0 //Used to control LEDs
 #define CHOICE_NONE     0 //Used to check buttons
@@ -110,6 +18,11 @@ LiquidCrystal_I2C lcd(0x3F, 16, 2);
 #define LED_YELLOW  9
 #define LED_RED     11
 #define LED_BLUE    13
+
+//define button pin games
+#define BUTTON_PINK_MEMORY  4
+#define BUTTON_BLUE_HIT     1
+#define BUTTONSTATE         LOW      //variable for reading button state
 
 
 // Button pin definitions
@@ -128,7 +41,6 @@ LiquidCrystal_I2C lcd(0x3F, 16, 2);
 #define ENTRY_TIME_LIMIT   3000 //Amount of time to press a button before game times out. 3000ms = 3 sec
 
 #define MODE_MEMORY  0
-#define MODE_BEEGEES 2
 
 // Game state variables
 byte gameMode = MODE_MEMORY; //By default, let's play the memory game
@@ -144,6 +56,8 @@ void setup()
   pinMode(BUTTON_GREEN, INPUT_PULLUP);
   pinMode(BUTTON_BLUE, INPUT_PULLUP);
   pinMode(BUTTON_YELLOW, INPUT_PULLUP);
+  pinMode(BUTTON_PINK_MEMORY, INPUT_PULLUP);
+  pinMode(BUTTON_BLUE_HIT, INPUT_PULLUP);
 
   pinMode(LED_RED, OUTPUT);
   pinMode(LED_GREEN, OUTPUT);
@@ -154,19 +68,15 @@ void setup()
   pinMode(BUZZER2, OUTPUT);
 
 
-  lcd.init();                   // initialiseer het LCD scherm
-  lcd.backlight();              // zet de backlight aan
+  lcd.init();                   // initializes LCD screen
+  lcd.backlight();              // turns on blacklight
   
-  //Mode checking
-  gameMode = MODE_MEMORY; // By default, we're going to play the memory game
 
-  // Check to see if the lower right button is pressed
-
-  // Check to see if upper right button is pressed
+  // Check to see if right button is pressed
   if (checkButton() == CHOICE_GREEN)
   {
 
-    //Turn on the upper right (green) LED
+    //Turn on the right (green) LED
     setLEDs(CHOICE_GREEN);
     toner(CHOICE_GREEN, 150);
 
@@ -182,13 +92,14 @@ void setup()
 
 void loop()
 {
-  lcd.clear();                 // wis het scherm
+  lcd.clear();                 // erase screen
 
-  screen1();                   // voer functie screen1 uit
-  delay(1000);                 // pauzeer 1 seconde
+  screen1();                   // perform function screen1
+  delay(1000);                 // pause for 1 second
 
-  screen2();                   // voer functie screen2 uit
-  delay(1000);                 // pauzeer 1 seconde
+ lcd.clear();                  // erase scherm
+  screen2();                   // perform function screen2
+  delay(1000);                 // pause for 1 seconde
 
   attractMode(); // Blink lights while waiting for user to press a button
 
@@ -205,35 +116,33 @@ void loop()
       play_winner(); // Player won, play winner tones
     else 
       play_loser(); // Player lost, play loser tones
-  }
-
-  
+  } 
 }
 
 void screen1() {
-  lcd.setCursor(0, 0);         // zet de cursor op positie 1, regel 1
-  lcd.print("Welkom!");           // schrijf op scherm
+  lcd.setCursor(0, 0);                     // put cursor on position 1, line 1
+  lcd.print("Welkom Heather!");            // write on screen
 
 }
 
 void screen2() {               
-  lcd.setCursor(0, 0);                        // zet de cursor op positie 1, regel 1
-  lcd.print("Druk op rood");                   // schrijf op scherm
-  lcd.setCursor(0, 1);                        // zet de cursor op positie 1, regel 2
-  lcd.print("om te beginnen.");                   // schrijf op scherm
+  lcd.setCursor(0, 0);                        // put cursor on position 1, line 1
+  lcd.print("Druk op rood");                  // write on screen
+  lcd.setCursor(0, 1);                        // put cursor on position 1, line 2
+  lcd.print("om te beginnen.");               // write on screen
 }
 
 void screen3() {
-  lcd.setCursor(0, 0);         // zet de cursor op positie 1, regel 1
-  lcd.print("Helaas!");           // schrijf op scherm
+  lcd.setCursor(0, 0);                        // put cursor on position 1, line 1
+  lcd.print("Helaas!");                       // write on screen
 
 }
 
 void screen4() {               
-  lcd.setCursor(0, 0);                        // zet de cursor op positie 1, regel 1
-  lcd.print("Behaalde rondes:");                   // schrijf op scherm
-  lcd.setCursor(7, 1);                        // zet de cursor op positie 1, regel 2
-  lcd.print(gameRound - 1);                   // schrijf op scherm
+  lcd.setCursor(0, 0);                        // put cursor on position 1, line 1
+  lcd.print("Behaalde rondes:");              // write on screen
+  lcd.setCursor(7, 1);                        // put cursor on position 1, line 2
+  lcd.print(gameRound - 1);                   // write on screen
 }
 
 
@@ -301,11 +210,11 @@ void add_to_moves(void)
 
   gameBoard[gameRound++] = newButton; // Add this new button to the game array
 
-        lcd.clear();                        // wis het scherm
-        lcd.setCursor(0, 0);                // zet de cursor op positie 1, regel 1
-        lcd.print("Huidige ronde: ");     // schrijf op scherm
-        lcd.setCursor(7, 1);                // zet de cursor op positie 1, regel 2
-        lcd.print(gameRound);               // schrijf op scherm
+        lcd.clear();                        // erase screen
+        lcd.setCursor(0, 0);                // put cursor on position 1, line 1
+        lcd.print("Huidige ronde: ");       // write on screen
+        lcd.setCursor(7, 1);                // put cursor on position 1, line 2
+        lcd.print(gameRound);               // write on screen
 }
 
 //The following functions control the hardware
@@ -473,13 +382,15 @@ void play_loser(void)
   buzz_sound(255, 1500);
 
 
-  lcd.clear();                 // wis het scherm
+  lcd.clear();                 // erase screen
 
-  screen3();                   // voer functie screen3 uit
-  delay(1000);                 // pauzeer 1 seconde
+  screen3();                   // perform function screen 3
+  delay(1000);                 // pauze for 1 second
+  
+  lcd.clear();                 // erase screen
 
-  screen4();                   // voer functie screen4 uit
-  delay(2000);                 // pauzeer 1 seconde
+  screen4();                   // perform function screen 4
+  delay(2000);                 // pauze for 1 second
 }
 
 
@@ -503,8 +414,6 @@ void attractMode(void)
     setLEDs(CHOICE_GREEN);
     delay(100);
     if (checkButton() != CHOICE_NONE) return;
-
-
 
   }
 }

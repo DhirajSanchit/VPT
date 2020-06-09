@@ -385,12 +385,12 @@ void play_loser(void)
   lcd.clear();                 // erase screen
 
   screen3();                   // perform function screen 3
-  delay(1000);                 // pauze for 1 second
+  delay(1000);                 // pause for 1 second
   
   lcd.clear();                 // erase screen
 
   screen4();                   // perform function screen 4
-  delay(2000);                 // pauze for 1 second
+  delay(2000);                 // pause for 1 second
 }
 
 

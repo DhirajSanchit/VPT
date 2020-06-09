@@ -13,10 +13,10 @@ int BUTTON_YELLOW =   8;
 int BUTTON_RED =     10;
 int BUTTON_BLUE =    12;
 
-int buttonGreenState = LOW;
-int buttonYellowState = LOW;
-int buttonRedState = LOW;
-int buttonBlueState = LOW;
+int BUTTONGREENSTATE = LOW;
+int BUTTONYELLOWSTATE = LOW;
+int BUTTONREDSTATE = LOW;
+int BUTTONBLUESTATE = LOW;
 
 void setup()
 {

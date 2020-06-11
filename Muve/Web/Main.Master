@@ -228,7 +228,9 @@
 
     <!-- BEGIN: Page JS -->
     <script src="app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>
-        <script src="app-assets/js/scripts/cards/widgets.js"></script>
+        <!--<script src="app-assets/js/scripts/cards/widgets.js"></script>-->
+    <script src="assets/js/timer.js"></script>
+
 
     <!-- END: Page JS-->
 </body>

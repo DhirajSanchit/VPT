@@ -1704,6 +1704,7 @@
     <Content Include="assets\css\style-rtl.css" />
     <Content Include="assets\css\style.css" />
     <Content Include="assets\js\scripts.js" />
+    <Content Include="assets\js\timer.js" />
     <Content Include="Web.config" />
     <Content Include="Dashboard.aspx" />
     <Content Include="Leaderboard.aspx" />

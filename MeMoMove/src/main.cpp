@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 // Bibliotheek voor communicatie met I2C / TWI apparaten
 #include <Wire.h> 
 

@@ -5,14 +5,16 @@
 // Bibliotheek voor het LCD scherm
 #include <LiquidCrystal_I2C.h>
 
+#include "klassen.h"
+
 LiquidCrystal_I2C lcd(0x3F, 16, 2);
 
 #define CHOICE_OFF      0 //Used to control LEDs
 #define CHOICE_NONE     0 //Used to check buttons
-#define CHOICE_BLUE (1 << 0)
-#define CHOICE_RED  (1 << 1)
-#define CHOICE_YELLOW (1 << 2)
-#define CHOICE_GREEN  (1 << 3)
+#define CHOICE_BLUE    (1 << 0)
+#define CHOICE_RED     (1 << 1)
+#define CHOICE_YELLOW  (1 << 2)
+#define CHOICE_GREEN   (1 << 3)
 
 #define LED_GREEN   7
 #define LED_YELLOW  9
@@ -30,6 +32,11 @@ LiquidCrystal_I2C lcd(0x3F, 16, 2);
 #define BUTTON_YELLOW 8
 #define BUTTON_RED    10
 #define BUTTON_BLUE   12
+
+  Led ledR (LED_RED);
+  Led ledG (LED_GREEN);
+  Led ledB (LED_BLUE);
+  Led ledY (LED_YELLOW);
 
 
 // Buzzer pin definitions
@@ -59,10 +66,6 @@ void setup()
   pinMode(BUTTON_PINK_MEMORY, INPUT_PULLUP);
   pinMode(BUTTON_BLUE_HIT, INPUT_PULLUP);
 
-  pinMode(LED_RED, OUTPUT);
-  pinMode(LED_GREEN, OUTPUT);
-  pinMode(LED_BLUE, OUTPUT);
-  pinMode(LED_YELLOW, OUTPUT);
 
   pinMode(BUZZER1, OUTPUT);
   pinMode(BUZZER2, OUTPUT);
@@ -77,15 +80,6 @@ void setup()
 
 void loop()
 {
-  lcd.clear();                 // erase screen
-
-  screen1();                   // perform function screen1
-  delay(1000);                 // pause for 1 second
-
- lcd.clear();                  // erase scherm
-  screen2();                   // perform function screen2
-  delay(1000);                 // pause for 1 seconde
-
   attractMode(); // Blink lights while waiting for user to press a button
 
   // Indicate the start of game play
@@ -102,6 +96,15 @@ void loop()
     else 
       play_loser(); // Player lost, play loser tones
   } 
+  
+  lcd.clear();                 // erase screen
+
+  screen1();                   // perform function screen1
+  delay(1000);                 // pause for 1 second
+
+  lcd.clear();                  // erase scherm
+  screen2();                   // perform function screen2
+  delay(1000);                 // pause for 1 seconde
 }
 
 void screen1() {
@@ -209,24 +212,24 @@ void add_to_moves(void)
 void setLEDs(byte leds)
 {
   if ((leds & CHOICE_RED) != 0)
-    digitalWrite(LED_RED, HIGH);
+    ledR.on();
   else
-    digitalWrite(LED_RED, LOW);
+    ledR.off();
 
   if ((leds & CHOICE_GREEN) != 0)
-    digitalWrite(LED_GREEN, HIGH);
+   ledG.on();
   else
-    digitalWrite(LED_GREEN, LOW);
-
+   ledG.off();
+   
   if ((leds & CHOICE_BLUE) != 0)
-    digitalWrite(LED_BLUE, HIGH);
+    ledB.on();
   else
-    digitalWrite(LED_BLUE, LOW);
+    ledB.off();
 
   if ((leds & CHOICE_YELLOW) != 0)
-    digitalWrite(LED_YELLOW, HIGH);
+    ledY.on();
   else
-    digitalWrite(LED_YELLOW, LOW);
+    ledY.off();
 }
 
 // Wait for a button to be pressed. 
@@ -353,29 +356,33 @@ void winner_sound(void)
 // Play the loser sound/lights
 void play_loser(void)
 {
-        
-  setLEDs(CHOICE_RED | CHOICE_GREEN);
-  buzz_sound(255, 1500);
-
-  setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
-  buzz_sound(255, 1500);
-
-  setLEDs(CHOICE_RED | CHOICE_GREEN);
-  buzz_sound(255, 1500);
-
-  setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
-  buzz_sound(255, 1500);
-
-
-  lcd.clear();                 // erase screen
-
-  screen3();                   // perform function screen 3
-  delay(1000);                 // pauze for 1 second
   
-  lcd.clear();                 // erase screen
 
-  screen4();                   // perform function screen 4
-  delay(2000);                 // pauze for 1 second
+  setLEDs(CHOICE_RED | CHOICE_GREEN);
+  buzz_sound(255, 1500);
+
+  setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
+  buzz_sound(255, 1500);
+
+  setLEDs(CHOICE_RED | CHOICE_GREEN);
+  buzz_sound(255, 1500);
+
+  setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
+  buzz_sound(255, 1500);
+
+  lcd.clear();                 // erase screen
+  setLEDs(CHOICE_RED | CHOICE_GREEN);
+  delay(1000);
+  screen3();                   // perform function screen 3
+  setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
+  delay(1000);                 // pause for 1 second
+  lcd.clear();                 // erase screen
+  setLEDs(CHOICE_RED | CHOICE_GREEN);
+  delay(1000);
+  screen4(); // perform function screen 4
+   setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
+  delay(2000);                 // pause for 1 second
+
 }
 
 
@@ -384,20 +391,24 @@ void attractMode(void)
 {
   while(1) 
   {
-    setLEDs(CHOICE_BLUE);
+    ledB.on();
     delay(100);
+    ledB.off();
     if (checkButton() != CHOICE_NONE) return;
 
-    setLEDs(CHOICE_RED);
+    ledR.on();
     delay(100);
+    ledR.off();
     if (checkButton() != CHOICE_NONE) return;
 
-    setLEDs(CHOICE_YELLOW);
+    ledY.on();
     delay(100);
+    ledY.off();
     if (checkButton() != CHOICE_NONE) return;
 
-    setLEDs(CHOICE_GREEN);
+    ledG.on();
     delay(100);
+    ledG.off();
     if (checkButton() != CHOICE_NONE) return;
 
   }

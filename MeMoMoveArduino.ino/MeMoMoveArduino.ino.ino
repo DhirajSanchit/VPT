@@ -16,10 +16,10 @@ LiquidCrystal_I2C lcd(0x3F, 16, 2);
 #define CHOICE_YELLOW  (1 << 2)
 #define CHOICE_GREEN   (1 << 3)
 
-#define LED_GREEN   7
-#define LED_YELLOW  9
-#define LED_RED     11
-#define LED_BLUE    13
+int LED_GREEN =     7;
+int LED_YELLOW =    9;
+int LED_RED =       11;
+int LED_BLUE =      13;
 
 //define button pin games
 #define BUTTON_PINK_MEMORY  4
@@ -28,20 +28,15 @@ LiquidCrystal_I2C lcd(0x3F, 16, 2);
 
 
 // Button pin definitions
-#define BUTTON_GREEN  6
-#define BUTTON_YELLOW 8
-#define BUTTON_RED    10
-#define BUTTON_BLUE   12
-
-  Led ledR (LED_RED);
-  Led ledG (LED_GREEN);
-  Led ledB (LED_BLUE);
-  Led ledY (LED_YELLOW);
+int BUTTON_GREEN =    6;
+int BUTTON_YELLOW =   8;
+int BUTTON_RED =      10;
+int BUTTON_BLUE =     12;
 
 
 // Buzzer pin definitions
-#define BUZZER1  2
-#define BUZZER2  3
+const int buzzer1 = 2;
+const int buzzer2 = 3;
 
 // Define game parameters
 #define ROUNDS_TO_WIN      13 //Number of rounds to succesfully remember before you win. 13 is do-able.
@@ -54,6 +49,13 @@ byte gameMode = MODE_MEMORY; //By default, let's play the memory game
 byte gameBoard[32]; //Contains the combination of buttons as we advance
 byte gameRound = 0; //Counts the number of succesful rounds the player has made it through
 
+  Led ledR (LED_RED);
+  Led ledG (LED_GREEN);
+  Led ledB (LED_BLUE);
+  Led ledY (LED_YELLOW);
+
+  Buz b(buzzer1, buzzer2);
+
 void setup()
 {
   //Setup hardware inputs/outputs. These pins are defined in the hardware_versions header file
@@ -65,10 +67,6 @@ void setup()
   pinMode(BUTTON_YELLOW, INPUT_PULLUP);
   pinMode(BUTTON_PINK_MEMORY, INPUT_PULLUP);
   pinMode(BUTTON_BLUE_HIT, INPUT_PULLUP);
-
-
-  pinMode(BUZZER1, OUTPUT);
-  pinMode(BUZZER2, OUTPUT);
 
 
   lcd.init();                   // initializes LCD screen
@@ -282,75 +280,34 @@ void toner(byte which, int buzz_length_ms)
   switch(which) 
   {
   case CHOICE_BLUE:
-    buzz_sound(buzz_length_ms,  851); 
+    b.blueSound();
     break;
   case CHOICE_RED:
-    buzz_sound(buzz_length_ms, 1136); 
+    b.redSound();
     break;
   case CHOICE_YELLOW:
-    buzz_sound(buzz_length_ms,  638); 
-    break;
+   b.yellowSound();
+   break;
   case CHOICE_GREEN:
-    buzz_sound(buzz_length_ms,  568); 
-    break;
+   b.greenSound();
+   break;
   }
 
   setLEDs(CHOICE_OFF); // Turn off all LEDs
 }
 
-// Toggle buzzer every buzz_delay_us, for a duration of buzz_length_ms.
-void buzz_sound(int buzz_length_ms, int buzz_delay_us)
-{
-  // Convert total play time from milliseconds to microseconds
-  long buzz_length_us = buzz_length_ms * (long)1000;
-
-  // Loop until the remaining play time is less than a single buzz_delay_us
-  while (buzz_length_us > (buzz_delay_us * 2))
-  {
-    buzz_length_us -= buzz_delay_us * 2; //Decrease the remaining play time
-
-    // Toggle the buzzer at various speeds
-    digitalWrite(BUZZER1, LOW);
-    digitalWrite(BUZZER2, HIGH);
-    delayMicroseconds(buzz_delay_us);
-
-    digitalWrite(BUZZER1, HIGH);
-    digitalWrite(BUZZER2, LOW);
-    delayMicroseconds(buzz_delay_us);
-  }
-}
 
 // Play the winner sound and lights
 void play_winner(void)
 {
   setLEDs(CHOICE_GREEN | CHOICE_BLUE);
-  winner_sound();
+  b.win();
   setLEDs(CHOICE_RED | CHOICE_YELLOW);
-  winner_sound();
+  b.win();
   setLEDs(CHOICE_GREEN | CHOICE_BLUE);
-  winner_sound();
+  b.win();
   setLEDs(CHOICE_RED | CHOICE_YELLOW);
-  winner_sound();
-}
-
-// Play the winner sound
-// This is just a unique (annoying) sound we came up with, there is no magic to it
-void winner_sound(void)
-{
-  // Toggle the buzzer at various speeds
-  for (byte x = 250 ; x > 70 ; x--)
-  {
-    for (byte y = 0 ; y < 3 ; y++)
-    {
-      digitalWrite(BUZZER2, HIGH);
-      digitalWrite(BUZZER1, LOW);
-      delayMicroseconds(x);
-
-      digitalWrite(BUZZER2, LOW);
-      digitalWrite(BUZZER1, HIGH);
-      delayMicroseconds(x);
-    }
-  }
+  b.win();
 }
 
 // Play the loser sound/lights
@@ -359,17 +316,17 @@ void play_loser(void)
   
 
   setLEDs(CHOICE_RED | CHOICE_GREEN);
-  buzz_sound(255, 1500);
+  b.lose();
 
   setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
-  buzz_sound(255, 1500);
+  b.lose();
 
   setLEDs(CHOICE_RED | CHOICE_GREEN);
-  buzz_sound(255, 1500);
+  b.lose();
 
   setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
-  buzz_sound(255, 1500);
-
+  b.lose();
+  
   lcd.clear();                 // erase screen
   setLEDs(CHOICE_RED | CHOICE_GREEN);
   delay(1000);

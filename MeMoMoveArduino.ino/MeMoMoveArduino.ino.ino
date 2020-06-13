@@ -114,6 +114,14 @@ buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
         lcd.print("Gekozen spel: ");       // write on screen
         lcd.setCursor(0, 1);                // put cursor on position 1, line 2
         lcd.print("Hit-The-Light");               // write on screen
+        delay(2000);
+
+        lcd.clear();                        // erase screen
+        lcd.setCursor(0, 0);                // put cursor on position 1, line 1
+        lcd.print("Druk op een knop");       // write on screen
+        lcd.setCursor(0, 1);                // put cursor on position 1, line 2
+        lcd.print("Om te beginnen");               // write on screen
+        delay(1000);
 
    attractMode(); // Blink lights while waiting for user to press a button
    
@@ -140,7 +148,15 @@ buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
         lcd.print("Gekozen spel: ");       // write on screen
         lcd.setCursor(0, 1);                // put cursor on position 1, line 2
         lcd.print("MeMoMove");               // write on screen
+        delay(2000);
+        
+        lcd.clear();                        // erase screen
+        lcd.setCursor(0, 0);                // put cursor on position 1, line 1
+        lcd.print("Druk op een knop");       // write on screen
+        lcd.setCursor(0, 1);                // put cursor on position 1, line 2
+        lcd.print("Om te beginnen");               // write on screen
         delay(1000);
+
 
  attractMode(); // Blink lights while waiting for user to press a button
 

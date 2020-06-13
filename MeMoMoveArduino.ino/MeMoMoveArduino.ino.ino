@@ -88,16 +88,13 @@ void setup()
 
   lcd.clear();                  // erase scherm
   screen2();                   // perform function screen2
-  delay(1000);                 // pause for 1 seconde
+  delay(2000);                 // pause for 1 seconde
+
 }
 
   
 
 void loop(){
-  
-  attractMode(); // Blink lights while waiting for user to press a button
-
-
 
 buttonStatePink = digitalRead(BUTTON_PINK_MEMORY);
 buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
@@ -109,6 +106,8 @@ buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
         ledR.on();
         ledY.on();
         ledG.on();
+
+         gameMode++;
         
         lcd.clear();                        // erase screen
         lcd.setCursor(0, 0);                // put cursor on position 1, line 1
@@ -116,15 +115,44 @@ buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
         lcd.setCursor(0, 1);                // put cursor on position 1, line 2
         lcd.print("Hit-The-Light");               // write on screen
 
-   setLEDs(CHOICE_RED | CHOICE_GREEN | CHOICE_BLUE | CHOICE_YELLOW); // Turn all LEDs on
+   attractMode(); // Blink lights while waiting for user to press a button
+   
+  setLEDs(CHOICE_RED | CHOICE_GREEN | CHOICE_BLUE | CHOICE_YELLOW); // Turn all LEDs on
   delay(1000);
   setLEDs(CHOICE_OFF); // Turn off LEDs
   delay(250);
   
-       gameMode++;
+  
+  }
+  
+  if (buttonStatePink == LOW)
+  {
+        ledB.on();
+        ledR.on();
+        ledY.on();
+        ledG.on();
+           
+    gameMode++;
+    gameMode++;
+        
+        lcd.clear();                        // erase screen
+        lcd.setCursor(0, 0);                // put cursor on position 1, line 1
+        lcd.print("Gekozen spel: ");       // write on screen
+        lcd.setCursor(0, 1);                // put cursor on position 1, line 2
+        lcd.print("MeMoMove");               // write on screen
+        delay(1000);
+
+ attractMode(); // Blink lights while waiting for user to press a button
+
+  // Indicate the start of game play
+  setLEDs(CHOICE_RED | CHOICE_GREEN | CHOICE_BLUE | CHOICE_YELLOW); // Turn all LEDs on
+  delay(1000);
+  setLEDs(CHOICE_OFF); // Turn off LEDs
+  delay(250);
+    
   }
 
-  if (gameMode == 1)
+    if (gameMode == 1)
   {
         
         ledB.off();
@@ -136,32 +164,8 @@ buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
 
     gameMode--;
   }
-  
-  if (buttonStatePink == LOW)
-  {
-        ledB.on();
-        ledR.on();
-        ledY.on();
-        ledG.on();
-        
-        lcd.clear();                        // erase screen
-        lcd.setCursor(0, 0);                // put cursor on position 1, line 1
-        lcd.print("Gekozen spel: ");       // write on screen
-        lcd.setCursor(0, 1);                // put cursor on position 1, line 2
-        lcd.print("MeMoMove");               // write on screen
-        delay(1000);
 
-  // Indicate the start of game play
-  setLEDs(CHOICE_RED | CHOICE_GREEN | CHOICE_BLUE | CHOICE_YELLOW); // Turn all LEDs on
-  delay(1000);
-  setLEDs(CHOICE_OFF); // Turn off LEDs
-  delay(250);
-        
-    gameMode++;
-    gameMode++;
-  }
-
-  if (gameMode == 2){
+  else if (gameMode == 2){
         
     // Play memory game and handle result
     if (play_memory() == true) 
@@ -172,7 +176,7 @@ buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
       gameMode--;
   } 
 
-  else if (buttonStateBlue == HIGH && buttonStatePink == HIGH)
+  else if (gameMode == 0)
   {
     ledR.on();
     ledB.on();
@@ -427,6 +431,7 @@ void play_loser(void)
   setLEDs(CHOICE_RED | CHOICE_GREEN);
   screen4(); // perform function screen 4
   setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
+  delay(2000);                 // pause for 1 second
 
 
 }

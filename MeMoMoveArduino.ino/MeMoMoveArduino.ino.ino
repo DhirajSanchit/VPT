@@ -9,6 +9,7 @@
 
 LiquidCrystal_I2C lcd(0x3F, 16, 2);
 
+
 #define CHOICE_OFF      0 //Used to control LEDs
 #define CHOICE_NONE     0 //Used to check buttons
 #define CHOICE_BLUE    (1 << 0)
@@ -24,7 +25,8 @@ int LED_BLUE =      13;
 //define button pin games
 #define BUTTON_PINK_MEMORY  4
 #define BUTTON_BLUE_HIT     1
-#define BUTTONSTATE         LOW      //variable for reading button state
+int buttonStatePink = 0;
+int buttonStateBlue = 0;
 
 
 // Button pin definitions
@@ -32,6 +34,8 @@ int BUTTON_GREEN =    6;
 int BUTTON_YELLOW =   8;
 int BUTTON_RED =      10;
 int BUTTON_BLUE =     12;
+
+int gameMode = 0;
 
 
 // Buzzer pin definitions
@@ -42,12 +46,14 @@ const int buzzer2 = 3;
 #define ROUNDS_TO_WIN      13 //Number of rounds to succesfully remember before you win. 13 is do-able.
 #define ENTRY_TIME_LIMIT   3000 //Amount of time to press a button before game times out. 3000ms = 3 sec
 
-#define MODE_MEMORY  0
+
 
 // Game state variables
-byte gameMode = MODE_MEMORY; //By default, let's play the memory game
+
 byte gameBoard[32]; //Contains the combination of buttons as we advance
 byte gameRound = 0; //Counts the number of succesful rounds the player has made it through
+
+
 
   Led ledR (LED_RED);
   Led ledG (LED_GREEN);
@@ -74,27 +80,7 @@ void setup()
   
 
   play_winner(); // After setup is complete, say hello to the world
-}
 
-void loop()
-{
-  attractMode(); // Blink lights while waiting for user to press a button
-
-  // Indicate the start of game play
-  setLEDs(CHOICE_RED | CHOICE_GREEN | CHOICE_BLUE | CHOICE_YELLOW); // Turn all LEDs on
-  delay(1000);
-  setLEDs(CHOICE_OFF); // Turn off LEDs
-  delay(250);
-
-  if (gameMode == MODE_MEMORY)
-  {
-    // Play memory game and handle result
-    if (play_memory() == true) 
-      play_winner(); // Player won, play winner tones
-    else 
-      play_loser(); // Player lost, play loser tones
-  } 
-  
   lcd.clear();                 // erase screen
 
   screen1();                   // perform function screen1
@@ -105,6 +91,101 @@ void loop()
   delay(1000);                 // pause for 1 seconde
 }
 
+  
+
+void loop(){
+  
+  attractMode(); // Blink lights while waiting for user to press a button
+
+
+
+buttonStatePink = digitalRead(BUTTON_PINK_MEMORY);
+buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
+
+
+    if (buttonStateBlue == LOW)
+  {
+        ledB.on();
+        ledR.on();
+        ledY.on();
+        ledG.on();
+        
+        lcd.clear();                        // erase screen
+        lcd.setCursor(0, 0);                // put cursor on position 1, line 1
+        lcd.print("Gekozen spel: ");       // write on screen
+        lcd.setCursor(0, 1);                // put cursor on position 1, line 2
+        lcd.print("Hit-The-Light");               // write on screen
+
+   setLEDs(CHOICE_RED | CHOICE_GREEN | CHOICE_BLUE | CHOICE_YELLOW); // Turn all LEDs on
+  delay(1000);
+  setLEDs(CHOICE_OFF); // Turn off LEDs
+  delay(250);
+  
+       gameMode++;
+  }
+
+  if (gameMode == 1)
+  {
+        
+        ledB.off();
+        ledR.on();
+        ledY.off();
+        ledG.on();
+        
+    delay(1000);
+
+    gameMode--;
+  }
+  
+  if (buttonStatePink == LOW)
+  {
+        ledB.on();
+        ledR.on();
+        ledY.on();
+        ledG.on();
+        
+        lcd.clear();                        // erase screen
+        lcd.setCursor(0, 0);                // put cursor on position 1, line 1
+        lcd.print("Gekozen spel: ");       // write on screen
+        lcd.setCursor(0, 1);                // put cursor on position 1, line 2
+        lcd.print("MeMoMove");               // write on screen
+        delay(1000);
+
+  // Indicate the start of game play
+  setLEDs(CHOICE_RED | CHOICE_GREEN | CHOICE_BLUE | CHOICE_YELLOW); // Turn all LEDs on
+  delay(1000);
+  setLEDs(CHOICE_OFF); // Turn off LEDs
+  delay(250);
+        
+    gameMode++;
+    gameMode++;
+  }
+
+  if (gameMode == 2){
+        
+    // Play memory game and handle result
+    if (play_memory() == true) 
+      play_winner(); // Player won, play winner tones
+    else 
+      play_loser(); // Player lost, play loser tones
+      gameMode--;
+      gameMode--;
+  } 
+
+  else if (buttonStateBlue == HIGH && buttonStatePink == HIGH)
+  {
+    ledR.on();
+    ledB.on();
+    ledY.on();
+    ledG.on();
+
+    lcd.clear();
+    screen5();
+    delay(1000);
+  }
+  
+}
+
 void screen1() {
   lcd.setCursor(0, 0);                     // put cursor on position 1, line 1
   lcd.print("Welkom Heather!");            // write on screen
@@ -112,10 +193,10 @@ void screen1() {
 }
 
 void screen2() {               
-  lcd.setCursor(0, 0);                        // put cursor on position 1, line 1
-  lcd.print("Druk op rood");                  // write on screen
-  lcd.setCursor(0, 1);                        // put cursor on position 1, line 2
-  lcd.print("om te beginnen.");               // write on screen
+  lcd.setCursor(0, 0);                     // put cursor on position 1, line 1
+  lcd.print("Kies een spel");             // write on screen
+  lcd.setCursor(0, 1);
+  lcd.print("om te beginnen.");
 }
 
 void screen3() {
@@ -127,9 +208,18 @@ void screen3() {
 void screen4() {               
   lcd.setCursor(0, 0);                        // put cursor on position 1, line 1
   lcd.print("Behaalde rondes:");              // write on screen
-  lcd.setCursor(7, 1);                        // put cursor on position 1, line 2
+  lcd.setCursor(7, 1);                        // put cursor on position 6, line 2
   lcd.print(gameRound - 1);                   // write on screen
 }
+
+void screen5(){
+  lcd.setCursor(0, 0);
+  lcd.print("Druk op een knop");
+  lcd.setCursor(0, 1);
+  lcd.print("aan de zijkant.");
+}
+
+
 
 
 //-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -139,6 +229,7 @@ void screen4() {
 // Returns 0 if player loses, or 1 if player wins
 boolean play_memory(void)
 {
+  
   randomSeed(millis()); // Seed the random generator with random amount of millis()
 
   gameRound = 0; // Reset the game to the beginning
@@ -329,16 +420,14 @@ void play_loser(void)
   
   lcd.clear();                 // erase screen
   setLEDs(CHOICE_RED | CHOICE_GREEN);
-  delay(1000);
   screen3();                   // perform function screen 3
   setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
   delay(1000);                 // pause for 1 second
   lcd.clear();                 // erase screen
   setLEDs(CHOICE_RED | CHOICE_GREEN);
-  delay(1000);
   screen4(); // perform function screen 4
-   setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
-  delay(2000);                 // pause for 1 second
+  setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
+
 
 }
 

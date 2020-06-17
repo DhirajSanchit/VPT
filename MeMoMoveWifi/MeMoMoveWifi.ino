@@ -1,18 +1,22 @@
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+#include "klassen.h"
+
 //Connecting to wifi
-#include <WiFi.h>; 
+#include <NTPClient.h>
+#include <WiFi.h>;
+#include <WiFiUdp.h>
 
 const char* ssid = "It hurts when IP";      //Name of the wWiFi
 const char* password = "milkandhoney";      //WiFi password
 
-// Bibliotheek voor communicatie met I2C / TWI apparaten
-#include <Wire.h>
+const long utcOffsetInSeconds = 7200;
 
-// Bibliotheek voor het LCD scherm
-#include <LiquidCrystal_I2C.h>
+// Define NTP Client to get time
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
 
-#include "klassen.ino"
-
-LiquidCrystal_I2C lcd(0x3F, 22, 21);
+LiquidCrystal_I2C lcd(0x3F, 16, 2);
 
 
 #define CHOICE_OFF      0 //Used to control LEDs
@@ -44,20 +48,17 @@ int gameMode = 0;
 
 
 // Buzzer pin definitions
-const int buzzer1 = 35;
-const int buzzer2 = 34;
+const int buzzer1 = 5;
+const int buzzer2 = 17;
 
 // Define game parameters
 #define ROUNDS_TO_WIN      13 //Number of rounds to succesfully remember before you win. 13 is do-able.
 #define ENTRY_TIME_LIMIT   3000 //Amount of time to press a button before game times out. 3000ms = 3 sec
 
 
-
 // Game state variables
-
 byte gameBoard[32]; //Contains the combination of buttons as we advance
 byte gameRound = 0; //Counts the number of succesful rounds the player has made it through
-
 
 
   Led ledR (LED_RED);
@@ -80,44 +81,69 @@ void setup()
   pinMode(BUTTON_PINK_MEMORY, INPUT_PULLUP);
   pinMode(BUTTON_BLUE_HIT, INPUT_PULLUP);
 
-
   lcd.init();                   // initializes LCD screen
   lcd.backlight();              // turns on blacklight
   
 
-  b.win(); // After setup is complete, say hello to the world
+  b.win(); 
+  b.win();      // After setup is complete, say hello to the world
 
+
+
+//WiFi settings
+
+  Serial.begin(115200);
+  WiFi.begin(ssid, password);
+
+
+  while (WiFi.status() != WL_CONNECTED){
+  Serial.println(".");
+  delay(500);
+}
+}
+
+
+void loop(){
+
+//welcome screen
+  timeClient.update();
+
+
+  if (timeClient.getHours() < 12.00){
   lcd.clear();                             // erase screen
   lcd.setCursor(0, 0);                     // put cursor on position 1, line 1
-  lcd.print("Welkom Heather!");            // write on screen
+  lcd.print("Goeden morgen");              // write on screen
+  lcd.setCursor(0, 1);                     // put cursor on position 1, line 2
+  lcd.print("Melvin");                    // write on screen
   delay(1000);                             // pause for 1 second
+  }
+
+ if (timeClient.getHours() > 12.00 && timeClient.getHours() < 17.00) {
+    lcd.clear();                             // erase screen
+    lcd.setCursor(0, 0);                     // put cursor on position 1, line 1
+    lcd.print("Goeden middag");              // write on screen
+    lcd.setCursor(0, 1);                     // put cursor on position 1, line 2
+    lcd.print("Melvin");                    // write on screen
+    delay(1000);                             // pause for 1 second
+  }
+
+ if (timeClient.getHours() > 17.00) {
+  lcd.clear();                             // erase screen
+  lcd.setCursor(0, 0);                     // put cursor on position 1, line 1
+  lcd.print("Goeden avond");               // write on screen
+  lcd.setCursor(0, 1);                     // put cursor on position 1, line 2
+  lcd.print("Melvin");                    // write on screen
+  delay(1000);                             // pause for 1 second
+ }
+  
+//choose a game screen
 
   lcd.clear();                  // erase scherm
   lcd.setCursor(0, 0);                     // put cursor on position 1, line 1
   lcd.print("Kies een spel");             // write on screen
   lcd.setCursor(0, 1);
   lcd.print("om te beginnen.");
-  delay(2000);                 // pause for 1 seconde
-
-  Serial.begin(115200);
-  WiFi.begin(ssid, password);
-  Serial.print("Connecting to WiFi");
-
-
-while (WiFi.status() != WL_CONNECTED){
-  Serial.println(".");
-  delay(500);
-
-  Serial.println("\nConnected to the WiFi network");
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
-  Serial.println("------------------------------------------------");
-
-
-}
-}
-
-void loop(){
+  delay(1000);                 // pause for 1 seconde
 
 buttonStatePink = digitalRead(BUTTON_PINK_MEMORY);
 buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
@@ -144,7 +170,7 @@ buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
         lcd.print("Druk op een knop");       // write on screen
         lcd.setCursor(0, 1);                // put cursor on position 1, line 2
         lcd.print("Om te beginnen");               // write on screen
-        delay(1000);
+        delay(2000);
 
    attractMode(); // Blink lights while waiting for user to press a button
    
@@ -168,7 +194,7 @@ buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
         lcd.setCursor(0, 0);                // put cursor on position 1, line 1
         lcd.print("Gekozen spel: ");       // write on screen
         lcd.setCursor(0, 1);                // put cursor on position 1, line 2
-        lcd.print("MeMoMove");               // write on screen
+        lcd.print("MeMoMüve");               // write on screen
         delay(2000);
         
         lcd.clear();                        // erase screen
@@ -176,7 +202,7 @@ buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
         lcd.print("Druk op een knop");       // write on screen
         lcd.setCursor(0, 1);                // put cursor on position 1, line 2
         lcd.print("Om te beginnen");               // write on screen
-        delay(1000);
+        delay(2000);
 
 
  attractMode(); // Blink lights while waiting for user to press a button
@@ -202,7 +228,7 @@ buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
     gameMode--;
   }
 
-  else if (gameMode == 2){
+ if (gameMode == 2){
         
     // Play memory game and handle result
     if (play_memory() == true) 
@@ -213,7 +239,7 @@ buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
       gameMode--;
   } 
 
-  else if (gameMode == 0)
+   if (gameMode == 0)
   {
     ledR.on();
     ledB.on();
@@ -221,28 +247,27 @@ buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
     ledG.on();
 
     lcd.clear();
-    screen5();
-    delay(1000);
-  }
-  
+    screenKnopZijkant();
+    delay(2000);
+  } 
 }
 
 
 
-void screen3() {
+void screenHelaas() {
   lcd.setCursor(0, 0);                        // put cursor on position 1, line 1
   lcd.print("Helaas!");                       // write on screen
 
 }
 
-void screen4() {               
+void screenBehaaldeRondes() {               
   lcd.setCursor(0, 0);                        // put cursor on position 1, line 1
   lcd.print("Behaalde rondes:");              // write on screen
   lcd.setCursor(7, 1);                        // put cursor on position 6, line 2
   lcd.print(gameRound - 1);                   // write on screen
 }
 
-void screen5(){
+void screenKnopZijkant(){
   lcd.setCursor(0, 0);
   lcd.print("Druk op een knop");
   lcd.setCursor(0, 1);
@@ -450,12 +475,12 @@ void play_loser()
   
   lcd.clear();                 // erase screen
   setLEDs(CHOICE_RED | CHOICE_GREEN);
-  screen3();                   // perform function screen 3
+  screenHelaas();                   // perform function screen 3
   setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
   delay(1000);                 // pause for 1 second
   lcd.clear();                 // erase screen
   setLEDs(CHOICE_RED | CHOICE_GREEN);
-  screen4(); // perform function screen 4
+  screenBehaaldeRondes(); // perform function screen 4
   setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
   delay(2000);                 // pause for 1 second
 

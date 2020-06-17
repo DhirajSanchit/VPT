@@ -74,6 +74,15 @@ void win(){
       digitalWrite(buz2, LOW);
       digitalWrite(buz1, HIGH);
       delayMicroseconds(x);
+
+      digitalWrite(buz2, HIGH);
+      digitalWrite(buz1, LOW);
+      delayMicroseconds(x);
+
+      digitalWrite(buz2, LOW);
+      digitalWrite(buz1, HIGH);
+      delayMicroseconds(x);
+      
     }
   }
 }

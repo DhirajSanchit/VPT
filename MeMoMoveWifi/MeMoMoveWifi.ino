@@ -12,7 +12,7 @@ const char* password = "milkandhoney";      //WiFi password
 
 #include "klassen.ino"
 
-LiquidCrystal_I2C lcd(0x3F, 16, 2);
+LiquidCrystal_I2C lcd(0x3F, 22, 21);
 
 
 #define CHOICE_OFF      0 //Used to control LEDs
@@ -22,31 +22,30 @@ LiquidCrystal_I2C lcd(0x3F, 16, 2);
 #define CHOICE_YELLOW  (1 << 2)
 #define CHOICE_GREEN   (1 << 3)
 
-int LED_GREEN =     7;
-int LED_YELLOW =    9;
-int LED_RED =       11;
+int LED_GREEN =     32;
+int LED_YELLOW =    25;
+int LED_RED =       27;
 int LED_BLUE =      13;
 
 //define button pin games
-#define BUTTON_PINK_MEMORY  4
-#define BUTTON_BLUE_HIT     1
+#define BUTTON_PINK_MEMORY  19
+#define BUTTON_BLUE_HIT     18
 int buttonStatePink = 0;
 int buttonStateBlue = 0;
 
 
-
 // Button pin definitions
-int BUTTON_GREEN =    6;
-int BUTTON_YELLOW =   8;
-int BUTTON_RED =      10;
+int BUTTON_GREEN =    33;
+int BUTTON_YELLOW =   26;
+int BUTTON_RED =      14;
 int BUTTON_BLUE =     12;
 
 int gameMode = 0;
 
 
 // Buzzer pin definitions
-const int buzzer1 = 2;
-const int buzzer2 = 3;
+const int buzzer1 = 35;
+const int buzzer2 = 34;
 
 // Define game parameters
 #define ROUNDS_TO_WIN      13 //Number of rounds to succesfully remember before you win. 13 is do-able.
@@ -222,7 +221,7 @@ buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
     ledG.on();
 
     lcd.clear();
-    screenKnopZijkant();
+    screen5();
     delay(1000);
   }
   
@@ -230,20 +229,20 @@ buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
 
 
 
-void screenHelaas() {
+void screen3() {
   lcd.setCursor(0, 0);                        // put cursor on position 1, line 1
   lcd.print("Helaas!");                       // write on screen
 
 }
 
-void screenBehaaldeRondes() {               
+void screen4() {               
   lcd.setCursor(0, 0);                        // put cursor on position 1, line 1
   lcd.print("Behaalde rondes:");              // write on screen
   lcd.setCursor(7, 1);                        // put cursor on position 6, line 2
   lcd.print(gameRound - 1);                   // write on screen
 }
 
-void screenKnopZijkant(){
+void screen5(){
   lcd.setCursor(0, 0);
   lcd.print("Druk op een knop");
   lcd.setCursor(0, 1);
@@ -451,12 +450,12 @@ void play_loser()
   
   lcd.clear();                 // erase screen
   setLEDs(CHOICE_RED | CHOICE_GREEN);
-  screenHelaas();                   // perform function screen 3
+  screen3();                   // perform function screen 3
   setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
   delay(1000);                 // pause for 1 second
   lcd.clear();                 // erase screen
   setLEDs(CHOICE_RED | CHOICE_GREEN);
-  screenBehaaldeRondes(); // perform function screen 4
+  screen4(); // perform function screen 4
   setLEDs(CHOICE_BLUE | CHOICE_YELLOW);
   delay(2000);                 // pause for 1 second
 

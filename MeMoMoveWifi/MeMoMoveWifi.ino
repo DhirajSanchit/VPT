@@ -1,6 +1,6 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
-#include "klassen.h"
+#include "klassen.ino"
 
 //Connecting to wifi
 #include <NTPClient.h>
@@ -56,10 +56,11 @@ const int buzzer2 = 17;
 #define ENTRY_TIME_LIMIT   3000 //Amount of time to press a button before game times out. 3000ms = 3 sec
 
 
+
 // Game state variables
+
 byte gameBoard[32]; //Contains the combination of buttons as we advance
 byte gameRound = 0; //Counts the number of succesful rounds the player has made it through
-
 
   Led ledR (LED_RED);
   Led ledG (LED_GREEN);
@@ -101,7 +102,6 @@ void setup()
   delay(500);
 }
 }
-
 
 void loop(){
 
@@ -194,7 +194,7 @@ buttonStateBlue = digitalRead(BUTTON_BLUE_HIT);
         lcd.setCursor(0, 0);                // put cursor on position 1, line 1
         lcd.print("Gekozen spel: ");       // write on screen
         lcd.setCursor(0, 1);                // put cursor on position 1, line 2
-        lcd.print("MeMoMüve");               // write on screen
+        lcd.print("MeMoMove");               // write on screen
         delay(2000);
         
         lcd.clear();                        // erase screen

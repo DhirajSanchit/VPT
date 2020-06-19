@@ -10,7 +10,7 @@ const char* password = "milkandhoney";      //WiFi password
 // Bibliotheek voor het LCD scherm
 #include <LiquidCrystal_I2C.h>
 
-#include "klassen.ino"
+#include "klassen.h"
 
 LiquidCrystal_I2C lcd(0x3F, 16, 2);
 

@@ -1,6 +1,6 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
-#include "klassen.ino"
+#include "klassen.h"
 
 //Connecting to wifi
 #include <NTPClient.h>
@@ -26,10 +26,10 @@ LiquidCrystal_I2C lcd(0x3F, 16, 2);
 #define CHOICE_YELLOW  (1 << 2)
 #define CHOICE_GREEN   (1 << 3)
 
-int LED_GREEN =     32;
-int LED_YELLOW =    25;
-int LED_RED =       27;
-int LED_BLUE =      13;
+int LED_GREEN =     11;
+int LED_YELLOW =    9;
+int LED_RED =       5;
+int LED_BLUE =      7;
 
 //define button pin games
 #define BUTTON_PINK_MEMORY  19
@@ -39,17 +39,17 @@ int buttonStateBlue = 0;
 
 
 // Button pin definitions
-int BUTTON_GREEN =    33;
-int BUTTON_YELLOW =   26;
-int BUTTON_RED =      14;
-int BUTTON_BLUE =     12;
+int BUTTON_GREEN =    10;
+int BUTTON_YELLOW =   8;
+int BUTTON_RED =      4;
+int BUTTON_BLUE =     6;
 
 int gameMode = 0;
 
 
 // Buzzer pin definitions
-const int buzzer1 = 5;
-const int buzzer2 = 17;
+const int buzzer1 = 2;
+const int buzzer2 = 3;
 
 // Define game parameters
 #define ROUNDS_TO_WIN      13 //Number of rounds to succesfully remember before you win. 13 is do-able.

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="26f81c8a8dda4b73a024e177ee1916bb" Name="Diagram1">
+        <EntityTypeShape EntityType="MuveModel.Company" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MuveModel.Company_Address" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MuveModel.Game" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MuveModel.Role" Width="1.5" PointX="3.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MuveModel.User" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MuveModel.User_Score" Width="1.5" PointX="8.25" PointY="4.5" IsExpanded="true" />
+        <AssociationConnector Association="MuveModel.FK__Company_A__compa__3D5E1FD2" ManuallyRouted="false" />
+        <AssociationConnector Association="MuveModel.FK__User__company_id__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="MuveModel.FK__User_Scor__game___4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="MuveModel.FK__User__role_id__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="MuveModel.FK__User_Scor__user___4AB81AF0" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

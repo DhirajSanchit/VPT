@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MuveModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="description" Type="text" />
+  </EntityType>
+  <EntityType Name="Company_Address">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="company_id" Type="int" Nullable="false" />
+    <Property Name="country" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="zip" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="street" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="number" Type="varchar" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Game">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="description" Type="text" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="description" Type="text" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="password" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="company_id" Type="int" Nullable="false" />
+    <Property Name="role_id" Type="int" Nullable="false" />
+    <Property Name="pending" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User_Score">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="int" Nullable="false" />
+    <Property Name="game_id" Type="int" Nullable="false" />
+    <Property Name="score" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+    <Property Name="datetime" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Company_A__compa__3D5E1FD2">
+    <End Role="Company" Type="Self.Company" Multiplicity="1" />
+    <End Role="Company_Address" Type="Self.Company_Address" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Company_Address">
+        <PropertyRef Name="company_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__User__company_id__440B1D61">
+    <End Role="Company" Type="Self.Company" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="company_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__User__role_id__4316F928">
+    <End Role="Role" Type="Self.Role" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="role_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__User_Scor__game___4BAC3F29">
+    <End Role="Game" Type="Self.Game" Multiplicity="1" />
+    <End Role="User_Score" Type="Self.User_Score" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Game">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="User_Score">
+        <PropertyRef Name="game_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__User_Scor__user___4AB81AF0">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="User_Score" Type="Self.User_Score" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="User_Score">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MuveModelStoreContainer">
+    <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Company_Address" EntityType="Self.Company_Address" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Game" EntityType="Self.Game" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User_Score" EntityType="Self.User_Score" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Company_A__compa__3D5E1FD2" Association="Self.FK__Company_A__compa__3D5E1FD2">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Company_Address" EntitySet="Company_Address" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User__company_id__440B1D61" Association="Self.FK__User__company_id__440B1D61">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User__role_id__4316F928" Association="Self.FK__User__role_id__4316F928">
+      <End Role="Role" EntitySet="Role" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User_Scor__game___4BAC3F29" Association="Self.FK__User_Scor__game___4BAC3F29">
+      <End Role="Game" EntitySet="Game" />
+      <End Role="User_Score" EntitySet="User_Score" />
+    </AssociationSet>
+    <AssociationSet Name="FK__User_Scor__user___4AB81AF0" Association="Self.FK__User_Scor__user___4AB81AF0">
+      <End Role="User" EntitySet="User" />
+      <End Role="User_Score" EntitySet="User_Score" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

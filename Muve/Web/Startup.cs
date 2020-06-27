@@ -1,48 +1,62 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Threading.Tasks;
+//using Microsoft.AspNetCore.Builder;
+//using Microsoft.AspNetCore.Hosting;
+//using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNetCore;
+//using Microsoft.Extensions.Configuration;
+//using Microsoft.Extensions.DependencyInjection;
 
-namespace Web.Properties {
+//namespace Web
+//{
+//    public class Startup
+//    {
+//        public Startup(IConfiguration configuration)
+//        {
+//            Configuration = configuration;
+//        }
 
-    public class Startup
-    {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+//        public IConfiguration Configuration { get; }
 
-        public IConfiguration Configuration { get; }
+//        // This method gets called by the runtime. Use this method to add services to the container.
+//        public void ConfigureServices(IServiceCollection services)
+//        {
+//            services.Configure<CookiePolicyOptions>(options =>
+//            {
+//                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+//                options.CheckConsentNeeded = context => true;
+//                options.MinimumSameSitePolicy = SameSiteMode.None;
+//            });
 
-        public void ConfigureServices(IServiceCollection services)
-        {
+//            services.AddMvcCore();
+//        }
 
-        }
-    }
+//        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+//        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+//        {
+//            if (env.IsDevelopment())
+//            {
+//                //app.UseDeveloperExceptionPage();
+//            }
+//            else
+//            {
+//                //app.UseExceptionHandler("/Home/Error");
+//                //app.UseHsts();
+//            }
 
+//            //app.UseHttpsRedirection();
+//            app.UseStaticFiles();
+//            app.UseCookiePolicy();
 
-
-    // This class allows you to handle specific events on the settings class:
-    //  The SettingChanging event is raised before a setting's value is changed.
-    //  The PropertyChanged event is raised after a setting's value is changed.
-    //  The SettingsLoaded event is raised after the setting values are loaded.
-    //  The SettingsSaving event is raised before the setting values are saved.
-    internal sealed partial class Settings {
-
-        public Settings() {
-            // // To add event handlers for saving and changing settings, uncomment the lines below:
-            //
-            // this.SettingChanging += this.SettingChangingEventHandler;
-            //
-            // this.SettingsSaving += this.SettingsSavingEventHandler;
-            //
-        }
-
-        private void SettingChangingEventHandler(object sender, System.Configuration.SettingChangingEventArgs e) {
-            // Add code to handle the SettingChangingEvent event here.
-        }
-
-        private void SettingsSavingEventHandler(object sender, System.ComponentModel.CancelEventArgs e) {
-            // Add code to handle the SettingsSaving event here.
-        }
-    }
-}
+//            app.UseMvc(routes =>
+//            {
+//                routes.MapRoute(
+//                    name: "default",
+//                    template: "{controller=Home}/{action=Index}/{id?}");
+//            });
+//        }
+//    }
+//}

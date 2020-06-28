@@ -453,3 +453,9 @@ C:\Users\gracious\Documents\GitHub\VPT\Muve\Web\bin\Antlr3.Runtime.pdb
 C:\Users\gracious\Documents\GitHub\VPT\Muve\Web\bin\Microsoft.AspNetCore.CookiePolicy.xml
 C:\Users\gracious\Documents\GitHub\VPT\Muve\Web\bin\System.Web.Optimization.xml
 C:\Users\gracious\Documents\GitHub\VPT\Muve\Web\obj\Debug\Web.csprojAssemblyReference.cache
+C:\Users\gracious\Documents\GitHub\VPT\Muve\Web\bin\System.Web.NHaml.dll
+C:\Users\gracious\Documents\GitHub\VPT\Muve\Web\bin\System.Web.NHaml.Mvc3.dll
+C:\Users\gracious\Documents\GitHub\VPT\Muve\Web\bin\Microsoft.DotNet.PlatformAbstractions.xml
+C:\Users\gracious\Documents\GitHub\VPT\Muve\Web\bin\Microsoft.Extensions.DependencyModel.xml
+C:\Users\gracious\Documents\GitHub\VPT\Muve\Web\bin\Newtonsoft.Json.Bson.pdb
+C:\Users\gracious\Documents\GitHub\VPT\Muve\Web\bin\System.Text.Encoding.CodePages.xml

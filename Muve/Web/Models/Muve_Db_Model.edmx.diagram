@@ -16,6 +16,7 @@
         <AssociationConnector Association="MuveModel.FK__User_Scor__game___4BAC3F29" ManuallyRouted="false" />
         <AssociationConnector Association="MuveModel.FK__User__role_id__4316F928" ManuallyRouted="false" />
         <AssociationConnector Association="MuveModel.FK__User_Scor__user___4AB81AF0" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MuveModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

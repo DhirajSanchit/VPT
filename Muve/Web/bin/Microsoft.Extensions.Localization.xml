@@ -4,6 +4,24 @@
         <name>Microsoft.Extensions.Localization</name>
     </assembly>
     <members>
+        <member name="T:Microsoft.Extensions.Localization.Internal.AssemblyWrapper">
+            <summary>
+            This API supports infrastructure and is not intended to be used
+            directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Localization.Internal.IResourceStringProvider">
+            <summary>
+            This API supports infrastructure and is not intended to be used
+            directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Extensions.Localization.Internal.ResourceManagerStringProvider">
+            <summary>
+            This API supports infrastructure and is not intended to be used
+            directly from your code. This API may change or be removed in future releases.
+            </summary>
+        </member>
         <member name="T:Microsoft.Extensions.Localization.IResourceNamesCache">
             <summary>
             Represents a cache of string names in resources.
@@ -22,29 +40,14 @@
             Provides programmatic configuration for localization.
             </summary>
         </member>
+        <member name="M:Microsoft.Extensions.Localization.LocalizationOptions.#ctor">
+            <summary>
+            Creates a new <see cref="T:Microsoft.Extensions.Localization.LocalizationOptions" />.
+            </summary>
+        </member>
         <member name="P:Microsoft.Extensions.Localization.LocalizationOptions.ResourcesPath">
             <summary>
             The relative path under application root where resource files are located.
-            </summary>
-        </member>
-        <member name="P:Microsoft.Extensions.Localization.Resources.Localization_MissingManifest">
-            <summary>
-            The manifest '{0}' was not found.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Extensions.Localization.Resources.FormatLocalization_MissingManifest(System.Object)">
-            <summary>
-            The manifest '{0}' was not found.
-            </summary>
-        </member>
-        <member name="P:Microsoft.Extensions.Localization.Resources.Localization_MissingManifest_Parent">
-            <summary>
-            No manifests exist for the current culture.
-            </summary>
-        </member>
-        <member name="M:Microsoft.Extensions.Localization.Resources.FormatLocalization_MissingManifest_Parent">
-            <summary>
-            No manifests exist for the current culture.
             </summary>
         </member>
         <member name="T:Microsoft.Extensions.Localization.ResourceLocationAttribute">
@@ -110,7 +113,7 @@
             <summary>
             Returns all strings in the specified culture.
             </summary>
-            <param name="includeParentCultures"></param>
+            <param name="includeParentCultures">Whether to include parent cultures in the search for a resource.</param>
             <param name="culture">The <see cref="T:System.Globalization.CultureInfo"/> to get strings for.</param>
             <returns>The strings.</returns>
         </member>
@@ -254,6 +257,11 @@
             An implementation of <see cref="T:Microsoft.Extensions.Localization.IResourceNamesCache"/> backed by a <see cref="T:System.Collections.Concurrent.ConcurrentDictionary`2"/>.
             </summary>
         </member>
+        <member name="M:Microsoft.Extensions.Localization.ResourceNamesCache.#ctor">
+            <summary>
+            Creates a new <see cref="T:Microsoft.Extensions.Localization.ResourceNamesCache" />
+            </summary>
+        </member>
         <member name="M:Microsoft.Extensions.Localization.ResourceNamesCache.GetOrAdd(System.String,System.Func{System.String,System.Collections.Generic.IList{System.String}})">
             <inheritdoc />
         </member>
@@ -274,6 +282,15 @@
             The RootNamespace of this Assembly. The RootNamespace of the assembly is used by Localization to
             determine the resource name to look for when RootNamespace differs from the AssemblyName.
             </summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Localization.Resources.Localization_MissingManifest">
+            <summary>The manifest '{0}' was not found.</summary>
+        </member>
+        <member name="M:Microsoft.Extensions.Localization.Resources.FormatLocalization_MissingManifest(System.Object)">
+            <summary>The manifest '{0}' was not found.</summary>
+        </member>
+        <member name="P:Microsoft.Extensions.Localization.Resources.Localization_MissingManifest_Parent">
+            <summary>No manifests exist for the current culture.</summary>
         </member>
         <member name="T:Microsoft.Extensions.DependencyInjection.LocalizationServiceCollectionExtensions">
             <summary>

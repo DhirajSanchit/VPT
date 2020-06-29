@@ -1,41 +1,537 @@
 ﻿
 @{
-    ViewBag.Title = "Leaderboards";
+    ViewBag.Title = "Müve | Leaderboards";
 }
 
 <h2>Leaderboards</h2>
 
 <!--Alert-->
-<section>
-    <br>
-    <br>
-    <div class="col-12">
-        <section id="types">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Types</h4>
-                </div>
-                <div class="card-content">
-                    <div class="card-body">
-                        <button class="btn btn-outline-success mr-1 mb-1" id="confirm-text">Click here!</button>
-                        <button class="btn btn-outline-success mr-1 mb-1" id="prompt-function">Click here!</button>
-                        <button type="button" class="btn btn-outline-success mr-1 mb-1" id="type-success">Success</button>
-                        <button type="button" class="btn btn-outline-info mr-1 mb-1" id="type-info">Info</button>
-                        <button type="button" class="btn btn-outline-warning mr-1 mb-1" id="type-warning">Warning</button>
-                        <button type="button" class="btn btn-outline-danger mr-1 mb-1" id="type-error">Error</button>
-                    </div>
+<br>
+<br>
+@*<div class="row">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">DEMO : Notifications</h4>
+            </div>
+            <div class="card-content">
+                <div class="card-body">
+                    <p></p>
+                    <button class="btn btn-outline-success mr-1 mb-1" id="bounce-in-animation">Challenge Started</button>
+                        <button class="btn btn-outline-warning mr-1 mb-1" id="shake-animation">Debuffed</button>
+                        <button class="btn btn-outline-danger mr-1 mb-1" id="tada-animation">Challenged</button>
                 </div>
             </div>
+        </div>
     </div>
-
-</section>
-
-
-</section>
-
-
-@*<div class="col-12">
-    <h4 class="card-title">Challenge Alert Example</h4>
-    <p class="card-description"></p> <button class="btn btn-outline-success" id="confirm-text">Click here!</button>
-    <button class="btn btn-outline-success" id="prompt-function">Click here!</button>
 </div>*@
+
+<section id="table-customer-statistics">
+    <div class="row match-height">
+        <!-- table latest custoner start -->
+        <div id="table-latest-customer" class="col-lg-8 col-md-12">
+            <div class="card">
+                <div class="card-header border-bottom">
+                    <h5 class="card-title">Rivals</h5>
+                    <div class="heading-elements">
+                        @*<button type="button" class="btn btn-outline-secondary">More</button>*@
+                    </div>
+                </div>
+                <!-- table start -->
+                <div class="table-responsive">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th class="text-right">Points</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img class="rounded-circle" src="~/app-assets/images/portrait/small/avatar-s-10.jpg" alt="avatar" height="32" width="32">
+                                        <div class="ml-1"><span class="text-bold-500">Karen </span><br><span class="text-muted">Karen@infinity.com</span></div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center justify-content-end">
+                                        <div class="text-bold-500 text-right">85</div>
+                                        @*<i class="bx bx-chevron-right font-large-1 cursor-pointer"></i>*@
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img class="rounded-circle" src="~/app-assets/images/portrait/small/avatar-s-23.jpg" alt="avatar" height="32" width="32">
+                                        <div class="ml-1">
+                                            <span class="text-bold-500">Ken</span>
+                                            <br>
+                                            <span class="text-muted">Ken@infinity.com</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center justify-content-end">
+                                        <div class="text-bold-500 text-right">67</div>
+                                        @*<i class="bx bx-chevron-right font-large-1 cursor-pointer"></i>*@
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- table end -->
+            </div>
+        </div>
+        <!-- table table latest customer ends -->
+        <!-- table table statistics two start -->
+        <div id="table-statistics-two" class="col-lg-4 col-md-12">
+            <div class="card">
+                <div class="card-header border-bottom">
+                    <h5 class="card-title">Available Power Ups</h5>
+                    <div class="heading-elements">
+                        <i class="bx bx-dots-horizontal-rounded font-medium-3 align-middle"></i>
+                    </div>
+                </div>
+                <!-- table start -->
+                <div class="table-responsive">
+                    <table class="table table-borderless table-hover mb-0">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center text-bold-500"><i class="text-success bx bxs-dollar-circle bx-tada-hover align-middle font-medium-5 mr-50"></i>Steal</div>
+                                </td>
+                                <td class="text-right text-muted">0</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center text-bold-500">
+                                        <i class="text-danger bx bxs-shield-alt-2 bx-tada align-middle font-medium-5 mr-50"></i>Body Armor
+                                    </div>
+                                </td>
+                                <td class="text-right text-muted">1</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center text-bold-500"><i class="text-info bx bx-chevrons-up bx-tada align-middle font-medium-5 mr-50"></i>Double Points</div>
+                                </td>
+                                <td class="text-right text-muted">2</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center text-bold-500"><i class="text-secondary bx bx-shuffle bx-tada-hover align-middle font-medium-5 mr-50"></i>Reroll</div>
+                                </td>
+                                <td class="text-right text-muted">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- table end -->
+            </div>
+        </div>
+        <!-- table table statistics two ends -->
+    </div>
+</section>
+
+<div class="content-body">
+    <!-- table Transactions start -->
+    <section id="table-transactions">
+        <div class="card">
+            <div class="card-header">
+                <!-- head -->
+                <h5 class="card-title">InfinITy</h5>
+                <!-- Single Date Picker and button -->
+                <div class="heading-elements">
+                </div>
+            </div>
+            <!-- datatable start -->
+            <div class="table-responsive">
+                <table id="table-extended-transactions" class=" text-center table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Position</th>
+                            <th>Name</th>
+                            <th>Branche</th>
+                            <th>Role</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="font-small-1 mr-50"></i><span>#5</span></td>
+                            <td class="text-bold-600">Amit Sanchit</td>
+                            <td><i class="bx bxs-circle success font-small-1 mr-50"></i>Susceptible</td>
+                            <td>Software Engineer</td>
+                            <td class="text-bold-600">25</td>
+                        </tr>
+                        <tr class="table-warning text-warning text-bold-600">
+                            <td><i class="text-bold-600 mr-50"><span>#1</i></span></td>
+                            <td class="">Heather v. Diemen</td>
+                            <td><i class="text-danger bx bxs-shield-alt-2 bx-tada  mr-50" alt="card" height="25" width="35"></i></td>
+                            <td>Hardware Developper</td>
+                            <td class="text-bold-600">93</td>
+                        </tr>
+                        <tr>
+                            <td><i class="font-small-1 mr-50"></i><span>#3</span></td>
+                            <td class="">Ertugrul Demerci</td>
+                            <td><i class="bx bxs-circle success font-small-1 mr-50"></i>Susceptible</td>
+                            <td>Hardware Developper</td>
+                            <td class="text-bold-600">73</td>
+                        </tr>
+                        <tr class="table-light text-light text-bold-600">
+                            <td><i class=" mr-50"><span>#2</i></span></td>
+                            <td class="text-bold-600">Emiel Popelier</td>
+                            <td>
+                                <i class="text-primary bx bx-chevrons-up bx-tada mr-50" alt="card" height="25" width="35"></i>
+                            </td>
+                            <td>Software Engineer</td>
+                            <td class="text-bold-600">87</td>
+                        </tr>
+                        <tr>
+                            <td><i class="font-small-1 mr-50"></i><span>#4</span></td>
+                            <td class="text-bold-600">Erkan Karakus</td>
+                            <td><i class="bx bxs-circle success font-small-1 mr-50"></i>Susceptible</td>
+                            <td>Network Engineer</td>
+                            <td class=" text-bold-600">55</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- datatable ends -->
+        </div>
+    </section>
+    <!-- table Transactions end -->
+    <section>
+        <!-- table checkbox start -->
+        @*<section id="table-chechbox">
+                <div class="card">
+                     datatable start
+                    <div class="table-responsive">
+                        <table id="table-extended-chechbox" class="table table-transparent">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th class="pl-0">name</th>
+                                    <th>date</th>
+                                    <th>member</th>
+                                    <th>action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td class="text-bold-600 pl-0">
+                                        <img src="../../../app-assets/images/icon/pdf.png" alt="file" class="mr-1" height="36" width="27">
+                                        Music
+                                    </td>
+                                    <td>11/04/2019</td>
+                                    <td>
+                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Lilian Nenez" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-5.jpg" alt="Avatar" height="30" width="30">
+                                            </li>
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Alberto Glotzbach" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-6.jpg" alt="Avatar" height="30" width="30">
+                                            </li>
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Alberto Glotzbach" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-7.jpg" alt="Avatar" height="30" width="30">
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <span class="bx bx-dots-horizontal-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                                            </span>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="bx bx-edit-alt mr-1"></i> edit</a>
+                                                <a class="dropdown-item" href="#"><i class="bx bx-trash mr-1"></i> delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="text-bold-600 pl-0">
+                                        <img src="../../../app-assets/images/icon/doc.png" alt="file" class="mr-1" height="36" width="27">Important
+                                        Documents
+                                    </td>
+                                    <td>
+                                        <span>10/04/2019</span>
+                                    </td>
+                                    <td>
+                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Lilian Nenez" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-1.jpg" alt="Avatar" height="30" width="30">
+                                            </li>
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Alberto Glotzbach" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-23.jpg" alt="Avatar" height="30" width="30">
+                                            </li>
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Alberto Glotzbach" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-3.jpg" alt="Avatar" height="30" width="30">
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <span class="bx bx-dots-horizontal-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                                            </span>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="bx bx-edit-alt mr-1"></i> edit</a>
+                                                <a class="dropdown-item" href="#"><i class="bx bx-trash mr-1"></i> delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="text-bold-600 pl-0">
+                                        <img src="../../../app-assets/images/icon/sketch.png" alt="file" class="mr-1" height="36" width="27">Folder
+                                        Mobile
+                                        Itteractions
+                                    </td>
+                                    <td>
+                                        <span>10/09/2019</span>
+                                    </td>
+                                    <td>
+                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Lilian Nenez" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-10.jpg" alt="Avatar" height="30" width="30">
+                                            </li>
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Alberto Glotzbach" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-11.jpg" alt="Avatar" height="30" width="30">
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <span class="bx bx-dots-horizontal-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                                            </span>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="bx bx-edit-alt mr-1"></i> edit</a>
+                                                <a class="dropdown-item" href="#"><i class="bx bx-trash mr-1"></i> delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="text-bold-600 pl-0"><img src="../../../app-assets/images/icon/sketch.png" alt="file" class="mr-1" height="36" width="27">New_Version_Table_Design.sketch</td>
+                                    <td>
+                                        <span>10/04/2019</span>
+                                    </td>
+                                    <td>
+                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Lilian Nenez" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-20.jpg" alt="Avatar" height="30" width="30">
+                                            </li>
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Alberto Glotzbach" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-16.jpg" alt="Avatar" height="30" width="30">
+                                            </li>
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Alberto Glotzbach" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-17.jpg" alt="Avatar" height="30" width="30">
+                                            </li>
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Alberto Glotzbach" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-11.jpg" alt="Avatar" height="30" width="30">
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <span class="bx bx-dots-horizontal-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                                            </span>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="bx bx-edit-alt mr-1"></i> edit</a>
+                                                <a class="dropdown-item" href="#"><i class="bx bx-trash mr-1"></i> delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="text-bold-600 pl-0">
+                                        <img src="../../../app-assets/images/icon/psd.png" alt="file" class="mr-1" height="36" width="27">Presention Kit
+                                        Desktop.psd
+                                    </td>
+                                    <td>
+                                        <span>10/03/2019</span>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <div class="dropup">
+                                            <span class="bx bx-dots-horizontal-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                                            </span>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="bx bx-edit-alt mr-1"></i> edit</a>
+                                                <a class="dropdown-item" href="#"><i class="bx bx-trash mr-1"></i> delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="text-bold-600 pl-0">
+                                        <img src="../../../app-assets/images/icon/pdf.png" alt="file" class="mr-1" height="36" width="27">Landing UI
+                                        Kit.pdf
+                                    </td>
+                                    <td>
+                                        <span>10/04/2019</span>
+                                    </td>
+                                    <td>
+                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Lilian Nenez" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-5.jpg" alt="Avatar" height="30" width="30">
+                                            </li>
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Alberto Glotzbach" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-6.jpg" alt="Avatar" height="30" width="30">
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <span class="bx bx-dots-horizontal-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                                            </span>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="bx bx-edit-alt mr-1"></i> edit</a>
+                                                <a class="dropdown-item" href="#"><i class="bx bx-trash mr-1"></i> delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="text-bold-600 pl-0">
+                                        <img src="../../../app-assets/images/icon/sketch.png" alt="file" class="mr-1" height="36" width="27">Modeling 3d
+                                        Itteractions
+                                    </td>
+                                    <td>
+                                        <span>05/04/2019</span>
+                                    </td>
+                                    <td></td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <span class="bx bx-dots-horizontal-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                                            </span>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="bx bx-edit-alt mr-1"></i> edit</a>
+                                                <a class="dropdown-item" href="#"><i class="bx bx-trash mr-1"></i> delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td class="text-bold-600 pl-0"><img src="../../../app-assets/images/icon/sketch.png" alt="file" class="mr-1" height="36" width="27">old_Version_Design.sketch</td>
+                                    <td>
+                                        <span>10/04/2019</span>
+                                    </td>
+                                    <td>
+                                        <ul class="list-unstyled users-list m-0  d-flex align-items-center">
+                                            <li data-toggle="tooltip" data-popup="tooltip-custom" data-placement="bottom" title="Lilian Nenez" class="avatar pull-up">
+                                                <img src="../../../app-assets/images/portrait/small/avatar-s-5.jpg" alt="Avatar" height="30" width="30">
+                                            </li>
+                                        </ul>
+                                    </td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <span class="bx bx-dots-horizontal-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                                            </span>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="bx bx-edit-alt mr-1"></i> edit</a>
+                                                <a class="dropdown-item" href="#"><i class="bx bx-trash mr-1"></i> delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                     datatable ends
+                </div>
+            </section>*@
+    </section>
+    <!-- table checkbox ends -->
+    <!-- table transactions statistics starts -->
+    <section id="table-transactions-statistics">
+        <div class="row match-height">
+            <!-- table table statistics start -->
+        </div>
+    </section>
+    <!-- table transactions statistics ends -->
+    <!-- table customer statistics starts -->
+    <!-- table customer statistics ends -->
+    <!-- table Marketing campaigns start -->
+    <!-- table Marketing campaigns ends -->
+
+
+    <div class="content-body">
+        <!-- table Transactions start -->
+        <section id="table-transactions">
+            <div class="card">
+                <div class="card-header">
+                    <!-- head -->
+                    <h5 class="card-title">Companies</h5>
+                    <!-- Single Date Picker and button -->
+                    <div class="heading-elements">
+                    </div>
+                </div>
+                <!-- datatable start -->
+                <div class="table-responsive">
+                    <table id="table-extended-transactions" class=" text-center table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Position</th>
+                                <th>Company</th>
+                                <th>Status</th>
+                                <th>Role</th>
+                                <th>Total Score</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="table-warning text-warning text-bold-600">
+                                <td><i class="text-bold-600 mr-50"><span>#1</i></span></td>
+                                <td class="">InfinITy</td>
+                                <td class="">IT</td>
+                                <td></td>
+                                <td class="text-bold-600">333</td>
+                            </tr>
+                            <tr class="table-light text-light text-bold-600">
+                                <td><i class="text-bold-600 mr-50"><span>#2</i></span></td>
+                                <td class="">Gracious</td>
+                                <td class="">Digital Agency</td>
+                                <td>Rival</td>
+                                <td class="text-bold-600">312</td>
+                            </tr>
+                            <tr class="table-danger text-danger text-bold-600">
+                                <td><i class="text-bold-600 mr-50"><span>#3</i></span></td>
+                                <td class="">Hyperion</td>
+                                <td class="">Creative Agency</td>
+                                <td>Rival</td>
+                                <td class="text-bold-600">278</td>
+                            </tr>
+                            <tr class=" text-bold-600">
+                                <td><i class="text-bold-600 mr-50"><span>#4</i></span></td>
+                                <td class="">Agency Digitals</td>
+                                <td class="">Digital Agency</td>
+                                <td><i class="bx bxs-circle light"></i>No threat</td>
+                                <td class="text-bold-600">178</td>
+                            </tr>
+                            <tr class=" text-bold-600">
+                                <td><i class="text-bold-600 mr-50"><span>#5</i></span></td>
+                                <td class="">Jetbrains</td>
+                                <td class="">Software Company</td>
+                                <td><i class="bx bxs-circle light"></i>No threat</td>
+                                <td class="text-bold-600">125</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- datatable ends -->
+            </div>
+        </section>
+        </div>
+
+
+
+    </div>

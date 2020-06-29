@@ -7,7 +7,7 @@
 	Author: Pixinvent
 	Author URL: hhttp://www.themeforest.net/user/pixinvent
 ==========================================================================================*/
-$(document).ready(function () {
+//$(document).ready(function () {
 
   // Basic
 
@@ -116,7 +116,7 @@ $(document).ready(function () {
 
   $("#bounce-in-animation").on('click', function () {
     Swal.fire({
-      title: 'Bounce In Animation',
+      title: 'Bounce In aaaaaaaah',
       animation: false,
       customClass: 'animated bounceIn',
       confirmButtonClass: 'btn btn-primary',
@@ -144,16 +144,16 @@ $(document).ready(function () {
   })
   $("#tada-animation").on('click', function () {
     Swal.fire({
-      title: 'Tada Animation',
+      title: 'Karen has Challenged you!',
       animation: false,
       customClass: 'animated tada',
-      confirmButtonClass: 'btn btn-primary',
+      confirmButtonClass: 'btn btn-danger',
       buttonsStyling: false,
     })
   })
   $("#shake-animation").on('click', function () {
     Swal.fire({
-      title: 'Shake Animation',
+      title: 'Ken has stolen 10 points!',
       animation: false,
       customClass: 'animated shake',
       confirmButtonClass: 'btn btn-primary',
@@ -224,8 +224,9 @@ $(document).ready(function () {
     Swal.fire({
       title: 'Auto close alert!',
       html: 'I will close in <strong></strong> seconds.',
-      timer: 2000,
-      confirmButtonClass: 'btn btn-primary',
+      timer: 90000,
+        confirmButtonClass: 'btn btn-primary',
+        allowOutsideClick: false,
       buttonsStyling: false,
       onBeforeOpen: function () {
         Swal.showLoading()
@@ -388,4 +389,7 @@ $(document).ready(function () {
     })
   });
 
-});
+
+    //Custom
+
+//});

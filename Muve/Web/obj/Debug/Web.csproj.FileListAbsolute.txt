@@ -458,3 +458,4 @@ C:\Users\gracious\Documents\GitHub\VPT\Muve\Web\bin\Microsoft.DotNet.PlatformAbs
 C:\Users\gracious\Documents\GitHub\VPT\Muve\Web\bin\Microsoft.Extensions.DependencyModel.xml
 C:\Users\gracious\Documents\GitHub\VPT\Muve\Web\bin\Newtonsoft.Json.Bson.pdb
 C:\Users\gracious\Documents\GitHub\VPT\Muve\Web\bin\System.Text.Encoding.CodePages.xml
+C:\Users\gracious\Documents\GitHub\VPT\Muve\Web\obj\Debug\Web.csprojAssemblyReference.cache
